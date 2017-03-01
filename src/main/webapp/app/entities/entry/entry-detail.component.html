@@ -1,0 +1,37 @@
+
+<div *ngIf="entry">
+    <h2><span jhiTranslate="jtrsApp.entry.detail.title">Entry</span> {{entry.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="jtrsApp.entry.position">Position</span></dt>
+        <dd>
+            <span>{{entry.position}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.entry.track">Track</span></dt>
+        <dd>
+            <div *ngIf="entry.track">
+                <a [routerLink]="['/track', entry.track?.id]">{{entry.track?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.entry.playlist">Playlist</span></dt>
+        <dd>
+            <div *ngIf="entry.playlist">
+                <a [routerLink]="['/playlist', entry.playlist?.id]">{{entry.playlist?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'entry/'+ entry.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

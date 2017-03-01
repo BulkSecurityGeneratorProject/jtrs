@@ -22,5 +22,33 @@
 
     <cache alias="com.inconceptio.trs.social.SocialUserConnection" uses-template="simple"/>
 
+    <cache alias="com.inconceptio.trs.domain.Album" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Album.tracks" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Artist" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Artist.tracks" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Entry" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Label" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Label.releases" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Member" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Member.playlists" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Playlist" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Playlist.entries" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Playlist.members" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Track" uses-template="simple"/>
+
+    <cache alias="com.inconceptio.trs.domain.Track.entries" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

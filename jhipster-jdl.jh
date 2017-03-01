@@ -1,0 +1,48 @@
+entity Artist {
+	name String required
+}
+
+entity Label {
+	name String required
+}
+
+entity Track {
+	title String required
+}
+
+entity Album {
+	title String required
+}
+
+entity Playlist {
+	number String required,
+    	theme TextBlob,
+    	guest TextBlob,
+    	date LocalDate required,
+	type String required,
+	recordUrl String,
+    	createTime ZonedDateTime,
+    	updateTime ZonedDateTime
+}
+
+entity Member {
+	name String required,
+    	status String
+}
+
+entity Entry {
+	position Integer required
+}
+
+relationship ManyToMany {
+	Playlist{member} to Member{playlist} 
+}
+
+relationship OneToMany {
+	Artist{track} to Track,
+    	Album{track} to Track,
+    	Label{release} to Album,
+	Playlist{entry} to Entry,
+	Track{entry} to Entry
+}
+

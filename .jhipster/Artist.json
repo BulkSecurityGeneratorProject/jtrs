@@ -1,0 +1,25 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "track",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "artist"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170228155420",
+    "entityTableName": "artist",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

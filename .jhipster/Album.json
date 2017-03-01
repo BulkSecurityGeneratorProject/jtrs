@@ -1,0 +1,31 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "label",
+            "otherEntityName": "label",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "track",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "album"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170228155420",
+    "entityTableName": "album",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

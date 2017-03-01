@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "artist",
+            "otherEntityName": "artist",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "entry",
+            "otherEntityName": "entry",
+            "otherEntityRelationshipName": "track"
+        },
+        {
+            "relationshipName": "album",
+            "otherEntityName": "album",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170228155420",
+    "entityTableName": "track",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

@@ -1,0 +1,59 @@
+
+<div *ngIf="playlist">
+    <h2><span jhiTranslate="jtrsApp.playlist.detail.title">Playlist</span> {{playlist.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="jtrsApp.playlist.number">Number</span></dt>
+        <dd>
+            <span>{{playlist.number}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.theme">Theme</span></dt>
+        <dd>
+            <span>{{playlist.theme}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.guest">Guest</span></dt>
+        <dd>
+            <span>{{playlist.guest}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.date">Date</span></dt>
+        <dd>
+            <span>{{playlist.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.type">Type</span></dt>
+        <dd>
+            <span>{{playlist.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.recordUrl">Record Url</span></dt>
+        <dd>
+            <span>{{playlist.recordUrl}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.createTime">Create Time</span></dt>
+        <dd>
+            <span>{{playlist.createTime | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.updateTime">Update Time</span></dt>
+        <dd>
+            <span>{{playlist.updateTime | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.playlist.member">Member</span></dt>
+        <dd>
+            <span *ngFor="let member of playlist.members; let last = last">
+                <a [routerLink]="['/member', member?.id ]">{{member.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'playlist/'+ playlist.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

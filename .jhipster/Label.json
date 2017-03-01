@@ -1,0 +1,25 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "release",
+            "otherEntityName": "album",
+            "otherEntityRelationshipName": "label"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170228155420",
+    "entityTableName": "label",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

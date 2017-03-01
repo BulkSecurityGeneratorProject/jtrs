@@ -1,0 +1,103 @@
+
+
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPlaylistLabel" jhiTranslate="jtrsApp.playlist.home.createOrEditLabel">Create or edit a Playlist</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!playlist.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="playlist.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.number" for="field_number">Number</label>
+            <input type="text" class="form-control" name="number" id="field_number"
+                [(ngModel)]="playlist.number"
+            required />
+            <div [hidden]="!(editForm.controls.number?.dirty && editForm.controls.number?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.number?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.theme" for="field_theme">Theme</label>
+            <textarea class="form-control" name="theme" id="field_theme"
+                [(ngModel)]="playlist.theme"  ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.guest" for="field_guest">Guest</label>
+            <textarea class="form-control" name="guest" id="field_guest"
+                [(ngModel)]="playlist.guest"  ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.date" for="field_date">Date</label>
+            <div class="input-group">
+                <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="playlist.date"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="dateDp.open()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.date?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.type" for="field_type">Type</label>
+            <input type="text" class="form-control" name="type" id="field_type"
+                [(ngModel)]="playlist.type"
+            required />
+            <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.recordUrl" for="field_recordUrl">Record Url</label>
+            <input type="text" class="form-control" name="recordUrl" id="field_recordUrl"
+                [(ngModel)]="playlist.recordUrl"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.createTime" for="field_createTime">Create Time</label>
+            <div class="input-group">
+                <input id="field_createTime" type="datetime-local" class="form-control" name="createTime" [(ngModel)]="playlist.createTime"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="jtrsApp.playlist.updateTime" for="field_updateTime">Update Time</label>
+            <div class="input-group">
+                <input id="field_updateTime" type="datetime-local" class="form-control" name="updateTime" [(ngModel)]="playlist.updateTime"
+                  />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="jtrsApp.playlist.member" for="field_member">Member</label>
+            <select class="form-control" id="field_member" multiple name="member" [(ngModel)]="playlist.members">
+                <option [ngValue]="getSelected(playlist.members, memberOption)" *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

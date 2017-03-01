@@ -2,10 +2,10 @@
 # Project Specific
 ######################
 /src/main/webapp/content/css/main.css
+/src/main/resources/config/**
 /target/www/**
 /src/test/javascript/coverage/
 /src/test/javascript/PhantomJS*/
-
 
 ######################
 # Node

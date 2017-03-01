@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "playlist",
+            "otherEntityName": "playlist",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "member"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170228155420",
+    "entityTableName": "member",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

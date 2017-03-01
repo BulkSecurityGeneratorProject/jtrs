@@ -1,0 +1,37 @@
+
+<div *ngIf="track">
+    <h2><span jhiTranslate="jtrsApp.track.detail.title">Track</span> {{track.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="jtrsApp.track.title">Title</span></dt>
+        <dd>
+            <span>{{track.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.track.artist">Artist</span></dt>
+        <dd>
+            <div *ngIf="track.artist">
+                <a [routerLink]="['/artist', track.artist?.id]">{{track.artist?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="jtrsApp.track.album">Album</span></dt>
+        <dd>
+            <div *ngIf="track.album">
+                <a [routerLink]="['/album', track.album?.id]">{{track.album?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'track/'+ track.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
