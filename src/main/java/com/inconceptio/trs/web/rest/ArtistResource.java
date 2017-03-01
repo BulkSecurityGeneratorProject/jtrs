@@ -2,13 +2,18 @@ package com.inconceptio.trs.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.inconceptio.trs.domain.Artist;
-
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import com.inconceptio.trs.repository.ArtistRepository;
 import com.inconceptio.trs.repository.search.ArtistSearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +37,7 @@ public class ArtistResource {
     private final Logger log = LoggerFactory.getLogger(ArtistResource.class);
 
     private static final String ENTITY_NAME = "artist";
-        
+
     private final ArtistRepository artistRepository;
 
     private final ArtistSearchRepository artistSearchRepository;
@@ -93,10 +98,13 @@ public class ArtistResource {
      */
     @GetMapping("/artists")
     @Timed
-    public List<Artist> getAllArtists() {
+    public ResponseEntity<List<Artist>> getAllArtists(@ApiParam Pageable pageable) throws URISyntaxException {
         log.debug("REST request to get all Artists");
-        List<Artist> artists = artistRepository.findAll();
-        return artists;
+//        List<Artist> artists = artistRepository.findAll();
+        Page<Artist> page = artistRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/artists");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+//        return artists;
     }
 
     /**
@@ -132,7 +140,7 @@ public class ArtistResource {
      * SEARCH  /_search/artists?query=:query : search for the artist corresponding
      * to the query.
      *
-     * @param query the query of the artist search 
+     * @param query the query of the artist search
      * @return the result of the search
      */
     @GetMapping("/_search/artists")

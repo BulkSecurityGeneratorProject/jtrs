@@ -14,6 +14,7 @@ import {
     ArtistDeleteDialogComponent,
     artistRoute,
     artistPopupRoute,
+    ArtistResolvePagingParams,
 } from './';
 
 let ENTITY_STATES = [
@@ -44,6 +45,7 @@ let ENTITY_STATES = [
     providers: [
         ArtistService,
         ArtistPopupService,
+        ArtistResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
