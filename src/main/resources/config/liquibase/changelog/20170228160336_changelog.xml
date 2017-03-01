@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+   <changeSet author="inconceptio (generated)" id="1488297820397-1">
+       <sqlFile dbms="h2, oracle"
+                encoding="UTF-8"
+                endDelimiter=";"
+                path="../data/data-artist.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                stripComments="true" />
+   </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-2">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-label.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-3">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-album.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-4">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-member.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-5">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-track.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-6">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-playlist.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-7">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-playlist_member.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+
+    <changeSet author="inconceptio (generated)" id="1488297820397-8">
+        <sqlFile dbms="h2, oracle"
+                 encoding="UTF-8"
+                 endDelimiter=";"
+                 path="../data/data-entry.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true" />
+    </changeSet>
+</databaseChangeLog>

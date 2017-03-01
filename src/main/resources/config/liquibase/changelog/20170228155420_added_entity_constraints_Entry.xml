@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Entry.
+    -->
+    <changeSet id="20170228155420-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="track_id"
+                                 baseTableName="entry"
+                                 constraintName="fk_entry_track_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="track"/>
+
+        <addForeignKeyConstraint baseColumnNames="playlist_id"
+                                 baseTableName="entry"
+                                 constraintName="fk_entry_playlist_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="playlist"/>
+
+    </changeSet>
+</databaseChangeLog>
