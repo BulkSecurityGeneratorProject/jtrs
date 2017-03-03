@@ -26,6 +26,6 @@
     "changelogDate": "20170228155420",
     "entityTableName": "album",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "pagination",
     "service": "no"
 }

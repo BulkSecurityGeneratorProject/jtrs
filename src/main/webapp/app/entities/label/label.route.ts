@@ -11,11 +11,29 @@ import { LabelDeletePopupComponent } from './label-delete-dialog.component';
 
 import { Principal } from '../../shared';
 
+@Injectable()
+export class LabelResolvePagingParams implements Resolve<any> {
+
+  constructor(private paginationUtil: PaginationUtil) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+      let page = route.queryParams['page'] ? route.queryParams['page'] : '1';
+      let sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+      return {
+          page: this.paginationUtil.parsePage(page),
+          predicate: this.paginationUtil.parsePredicate(sort),
+          ascending: this.paginationUtil.parseAscending(sort)
+    };
+  }
+}
 
 export const labelRoute: Routes = [
   {
     path: 'label',
     component: LabelComponent,
+    resolve: {
+      'pagingParams': LabelResolvePagingParams
+    },
     data: {
         authorities: ['ROLE_USER'],
         pageTitle: 'jtrsApp.label.home.title'

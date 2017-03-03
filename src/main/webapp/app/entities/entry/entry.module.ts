@@ -14,6 +14,7 @@ import {
     EntryDeleteDialogComponent,
     entryRoute,
     entryPopupRoute,
+    EntryResolvePagingParams,
 } from './';
 
 let ENTITY_STATES = [
@@ -44,6 +45,7 @@ let ENTITY_STATES = [
     providers: [
         EntryService,
         EntryPopupService,
+        EntryResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

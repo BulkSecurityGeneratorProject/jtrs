@@ -28,17 +28,16 @@
     <div class="table-responsive" *ngIf="playlists">
         <table class="table table-striped">
             <thead>
-            <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.number">Number</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.theme">Theme</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.guest">Guest</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.date">Date</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.type">Type</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.recordUrl">Record Url</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.createTime">Create Time</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.updateTime">Update Time</span></th>
-            <th><span jhiTranslate="jtrsApp.playlist.member">Member</span></th>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="number"><span jhiTranslate="jtrsApp.playlist.number">Number</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="theme"><span jhiTranslate="jtrsApp.playlist.theme">Theme</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="guest"><span jhiTranslate="jtrsApp.playlist.guest">Guest</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="date"><span jhiTranslate="jtrsApp.playlist.date">Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type"><span jhiTranslate="jtrsApp.playlist.type">Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="recordUrl"><span jhiTranslate="jtrsApp.playlist.recordUrl">Record Url</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createTime"><span jhiTranslate="jtrsApp.playlist.createTime">Create Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="updateTime"><span jhiTranslate="jtrsApp.playlist.updateTime">Update Time</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -53,11 +52,6 @@
                 <td>{{playlist.recordUrl}}</td>
                 <td>{{playlist.createTime | date:'medium'}}</td>
                 <td>{{playlist.updateTime | date:'medium'}}</td>
-                <td>
-                    <span *ngFor="let member of playlist.members; let last = last">
-                            <a class="form-control-static" [routerLink]="['../member', member?.id ]">{{member.id}}</a>{{last ? '' : ', '}}
-                        </span>
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
@@ -86,4 +80,12 @@
             </tbody>
         </table>
     </div>
+        <div *ngIf="playlists && playlists.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
 </div>

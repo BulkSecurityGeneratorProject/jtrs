@@ -20,6 +20,6 @@
     "changelogDate": "20170228155420",
     "entityTableName": "label",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "pagination",
     "service": "no"
 }

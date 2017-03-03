@@ -6,9 +6,15 @@ import com.inconceptio.trs.domain.Entry;
 import com.inconceptio.trs.repository.EntryRepository;
 import com.inconceptio.trs.repository.search.EntrySearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,14 +95,18 @@ public class EntryResource {
     /**
      * GET  /entries : get all the entries.
      *
+     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of entries in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/entries")
     @Timed
-    public List<Entry> getAllEntries() {
-        log.debug("REST request to get all Entries");
-        List<Entry> entries = entryRepository.findAll();
-        return entries;
+    public ResponseEntity<List<Entry>> getAllEntries(@ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Entries");
+        Page<Entry> page = entryRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entries");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -133,15 +143,18 @@ public class EntryResource {
      * to the query.
      *
      * @param query the query of the entry search 
+     * @param pageable the pagination information
      * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/_search/entries")
     @Timed
-    public List<Entry> searchEntries(@RequestParam String query) {
-        log.debug("REST request to search Entries for query {}", query);
-        return StreamSupport
-            .stream(entrySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Entry>> searchEntries(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Entries for query {}", query);
+        Page<Entry> page = entrySearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/entries");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 

@@ -6,9 +6,15 @@ import com.inconceptio.trs.domain.Playlist;
 import com.inconceptio.trs.repository.PlaylistRepository;
 import com.inconceptio.trs.repository.search.PlaylistSearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,14 +95,18 @@ public class PlaylistResource {
     /**
      * GET  /playlists : get all the playlists.
      *
+     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of playlists in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/playlists")
     @Timed
-    public List<Playlist> getAllPlaylists() {
-        log.debug("REST request to get all Playlists");
-        List<Playlist> playlists = playlistRepository.findAllWithEagerRelationships();
-        return playlists;
+    public ResponseEntity<List<Playlist>> getAllPlaylists(@ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Playlists");
+        Page<Playlist> page = playlistRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/playlists");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -133,15 +143,18 @@ public class PlaylistResource {
      * to the query.
      *
      * @param query the query of the playlist search 
+     * @param pageable the pagination information
      * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/_search/playlists")
     @Timed
-    public List<Playlist> searchPlaylists(@RequestParam String query) {
-        log.debug("REST request to search Playlists for query {}", query);
-        return StreamSupport
-            .stream(playlistSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Playlist>> searchPlaylists(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Playlists for query {}", query);
+        Page<Playlist> page = playlistSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/playlists");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 

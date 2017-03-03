@@ -14,6 +14,7 @@ import {
     PlaylistDeleteDialogComponent,
     playlistRoute,
     playlistPopupRoute,
+    PlaylistResolvePagingParams,
 } from './';
 
 let ENTITY_STATES = [
@@ -44,6 +45,7 @@ let ENTITY_STATES = [
     providers: [
         PlaylistService,
         PlaylistPopupService,
+        PlaylistResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

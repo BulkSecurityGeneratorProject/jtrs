@@ -6,9 +6,15 @@ import com.inconceptio.trs.domain.Label;
 import com.inconceptio.trs.repository.LabelRepository;
 import com.inconceptio.trs.repository.search.LabelSearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,14 +95,18 @@ public class LabelResource {
     /**
      * GET  /labels : get all the labels.
      *
+     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of labels in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/labels")
     @Timed
-    public List<Label> getAllLabels() {
-        log.debug("REST request to get all Labels");
-        List<Label> labels = labelRepository.findAll();
-        return labels;
+    public ResponseEntity<List<Label>> getAllLabels(@ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Labels");
+        Page<Label> page = labelRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/labels");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -133,15 +143,18 @@ public class LabelResource {
      * to the query.
      *
      * @param query the query of the label search 
+     * @param pageable the pagination information
      * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/_search/labels")
     @Timed
-    public List<Label> searchLabels(@RequestParam String query) {
-        log.debug("REST request to search Labels for query {}", query);
-        return StreamSupport
-            .stream(labelSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Label>> searchLabels(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Labels for query {}", query);
+        Page<Label> page = labelSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/labels");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 

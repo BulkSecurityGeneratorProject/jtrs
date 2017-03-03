@@ -14,6 +14,7 @@ import {
     AlbumDeleteDialogComponent,
     albumRoute,
     albumPopupRoute,
+    AlbumResolvePagingParams,
 } from './';
 
 let ENTITY_STATES = [
@@ -44,6 +45,7 @@ let ENTITY_STATES = [
     providers: [
         AlbumService,
         AlbumPopupService,
+        AlbumResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -6,9 +6,15 @@ import com.inconceptio.trs.domain.Track;
 import com.inconceptio.trs.repository.TrackRepository;
 import com.inconceptio.trs.repository.search.TrackSearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,14 +95,18 @@ public class TrackResource {
     /**
      * GET  /tracks : get all the tracks.
      *
+     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of tracks in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/tracks")
     @Timed
-    public List<Track> getAllTracks() {
-        log.debug("REST request to get all Tracks");
-        List<Track> tracks = trackRepository.findAll();
-        return tracks;
+    public ResponseEntity<List<Track>> getAllTracks(@ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Tracks");
+        Page<Track> page = trackRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tracks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -133,15 +143,18 @@ public class TrackResource {
      * to the query.
      *
      * @param query the query of the track search 
+     * @param pageable the pagination information
      * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/_search/tracks")
     @Timed
-    public List<Track> searchTracks(@RequestParam String query) {
-        log.debug("REST request to search Tracks for query {}", query);
-        return StreamSupport
-            .stream(trackSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Track>> searchTracks(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Tracks for query {}", query);
+        Page<Track> page = trackSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/tracks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 

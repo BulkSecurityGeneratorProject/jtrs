@@ -14,6 +14,7 @@ import {
     TrackDeleteDialogComponent,
     trackRoute,
     trackPopupRoute,
+    TrackResolvePagingParams,
 } from './';
 
 let ENTITY_STATES = [
@@ -44,6 +45,7 @@ let ENTITY_STATES = [
     providers: [
         TrackService,
         TrackPopupService,
+        TrackResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

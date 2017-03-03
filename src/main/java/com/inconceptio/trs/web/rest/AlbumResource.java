@@ -6,9 +6,15 @@ import com.inconceptio.trs.domain.Album;
 import com.inconceptio.trs.repository.AlbumRepository;
 import com.inconceptio.trs.repository.search.AlbumSearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,14 +95,18 @@ public class AlbumResource {
     /**
      * GET  /albums : get all the albums.
      *
+     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of albums in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/albums")
     @Timed
-    public List<Album> getAllAlbums() {
-        log.debug("REST request to get all Albums");
-        List<Album> albums = albumRepository.findAll();
-        return albums;
+    public ResponseEntity<List<Album>> getAllAlbums(@ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Albums");
+        Page<Album> page = albumRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/albums");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -133,15 +143,18 @@ public class AlbumResource {
      * to the query.
      *
      * @param query the query of the album search 
+     * @param pageable the pagination information
      * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/_search/albums")
     @Timed
-    public List<Album> searchAlbums(@RequestParam String query) {
-        log.debug("REST request to search Albums for query {}", query);
-        return StreamSupport
-            .stream(albumSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Album>> searchAlbums(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Albums for query {}", query);
+        Page<Album> page = albumSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/albums");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 
