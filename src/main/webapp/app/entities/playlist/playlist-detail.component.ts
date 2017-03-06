@@ -21,6 +21,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     ) {
         this.jhiLanguageService.setLocations(['playlist']);
     }
+    // TODO: Remove this when we're done
+    get diagnostic() { return JSON.stringify(this.playlist); }
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe(params => {

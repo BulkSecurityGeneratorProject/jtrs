@@ -2,12 +2,13 @@ package com.inconceptio.trs.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.inconceptio.trs.domain.Artist;
-import com.inconceptio.trs.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
+
 import com.inconceptio.trs.repository.ArtistRepository;
 import com.inconceptio.trs.repository.search.ArtistSearchRepository;
 import com.inconceptio.trs.web.rest.util.HeaderUtil;
+import com.inconceptio.trs.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -37,7 +38,7 @@ public class ArtistResource {
     private final Logger log = LoggerFactory.getLogger(ArtistResource.class);
 
     private static final String ENTITY_NAME = "artist";
-
+        
     private final ArtistRepository artistRepository;
 
     private final ArtistSearchRepository artistSearchRepository;
@@ -94,17 +95,18 @@ public class ArtistResource {
     /**
      * GET  /artists : get all the artists.
      *
+     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of artists in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/artists")
     @Timed
-    public ResponseEntity<List<Artist>> getAllArtists(@ApiParam Pageable pageable) throws URISyntaxException {
-        log.debug("REST request to get all Artists");
-//        List<Artist> artists = artistRepository.findAll();
+    public ResponseEntity<List<Artist>> getAllArtists(@ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Artists");
         Page<Artist> page = artistRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/artists");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-//        return artists;
     }
 
     /**
@@ -140,16 +142,19 @@ public class ArtistResource {
      * SEARCH  /_search/artists?query=:query : search for the artist corresponding
      * to the query.
      *
-     * @param query the query of the artist search
+     * @param query the query of the artist search 
+     * @param pageable the pagination information
      * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @GetMapping("/_search/artists")
     @Timed
-    public List<Artist> searchArtists(@RequestParam String query) {
-        log.debug("REST request to search Artists for query {}", query);
-        return StreamSupport
-            .stream(artistSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Artist>> searchArtists(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Artists for query {}", query);
+        Page<Artist> page = artistSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/artists");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 

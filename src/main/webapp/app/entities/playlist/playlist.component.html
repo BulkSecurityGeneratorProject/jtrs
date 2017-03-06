@@ -46,10 +46,10 @@
                 <td><a [routerLink]="['../playlist', playlist.id ]">{{playlist.id}}</a></td>
                 <td>{{playlist.number}}</td>
                 <td>{{playlist.theme}}</td>
-                <td [innerHTML]="playlist.guest"></td>
+                <td>{{playlist.guest}}</td>
                 <td>{{playlist.date | date:'mediumDate'}}</td>
                 <td>{{playlist.type}}</td>
-                <td [innerHTML]="playlist.recordUrl"></td>
+                <td>{{playlist.recordUrl}}</td>
                 <td>{{playlist.createTime | date:'medium'}}</td>
                 <td>{{playlist.updateTime | date:'medium'}}</td>
                 <td class="text-right">
