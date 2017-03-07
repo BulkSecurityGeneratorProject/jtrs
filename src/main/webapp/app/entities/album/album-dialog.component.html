@@ -31,7 +31,7 @@
             <label jhiTranslate="jtrsApp.album.label" for="field_label">Label</label>
             <select class="form-control" id="field_label" name="label" [(ngModel)]="album.label" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="labelOption.id === album.label?.id ? album.label : labelOption" *ngFor="let labelOption of labels; trackBy: trackLabelById">{{labelOption.id}}</option>
+                <option [ngValue]="labelOption.id === album.label?.id ? album.label : labelOption" *ngFor="let labelOption of labels; trackBy: trackLabelById">{{labelOption.name}}</option>
             </select>
         </div>
     </div>

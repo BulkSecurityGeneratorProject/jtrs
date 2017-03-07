@@ -11,7 +11,7 @@
         <dt><span jhiTranslate="jtrsApp.album.label">Label</span></dt>
         <dd>
             <div *ngIf="album.label">
-                <a [routerLink]="['/label', album.label?.id]">{{album.label?.id}}</a>
+                <a [routerLink]="['/label', album.label?.id]">{{album.label?.name}}</a>
             </div>
         </dd>
     </dl>
